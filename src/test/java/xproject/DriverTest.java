@@ -1,7 +1,8 @@
 package xproject;
-
 import static xproject.Driver.conn;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -12,7 +13,7 @@ class DriverTest {
     @Test
     public static void main(String[] args) throws SQLException {
         Scanner input = new Scanner(System.in);
-        DatabaseService c = new DatabaseService(); //connect
+        AlienDatabaseService c = new AlienDatabaseService(); //connect
         //INITIALISING VARIABLES
         String table = "";
         int x = 0;
@@ -32,12 +33,16 @@ class DriverTest {
         while(x!=0) {//while to use the command line user option menu
             switch(x) {
                 case 1:
-                    print("Insert the table that you want to see --> ");
+                    print("Please choose which database table to access [ --> ");
                     table = input.next();
-                    print("Insert the thing that you want to see in the table --> ");
+                    //log.info("User has chosen to view the Database");
+                    print("Please choose what from the aliens db you wish to see (EX: alien_id)--> ");
                     String selected = input.next();
-                    println("");
-                    c.printResultSet(c.Select(table, selected));//call the function to see the tables
+                    println("\n");
+                    ResultSet Aliens = c.Select(table, selected);
+                    c.printAliensResultset(Aliens, selected);
+                    print("\n\n");
+                    c.printResultSet(c.Select(table, selected));                                                        //call function to see the tables
                     break;
                 case 2:
                     print("Insert the table that you want to update --> ");
@@ -95,12 +100,29 @@ class DriverTest {
         c.close();
     }
 
+
+
+
+
+
+    @Test
+    public void Delete(String table , String condition ) throws SQLException {
+        String command = "DELETE  FROM " + table + " WHERE " + condition + ";";
+        PreparedStatement st = conn.prepareStatement(command);
+        st.execute();
+    }
+
+
+    @Test
     static public void print(Object o) {
         System.out.print(o);
     }
+
+    @Test
     static public void println(Object o) {
         System.out.println(o);
     }
+    @Test
     //close the connection
     public boolean close() {
         try {

@@ -1,20 +1,21 @@
 package xproject;
 import projectx.util.ConnectionUtil;
-
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
-
+import org.apache.log4j.Logger;
 
 public class Driver {
     public static Connection conn;
+
     public static void main(String[] args) throws SQLException {
+        final Logger log = Logger.getLogger(Driver.class);
         conn = ConnectionUtil.getConnection();
+        log.info("Hello logger!");
         Scanner input = new Scanner(System.in);
-        DatabaseService c = new DatabaseService(); //connect
-        //INITIALISING VARIABLES
+        AlienDatabaseService c = new AlienDatabaseService();
+                                                                                             //Initializing Variables
         String table = "";
         int x = 0;
 
@@ -31,23 +32,24 @@ public class Driver {
 
         x = input.nextInt();
 
-        while(x!=0) {//while to use the command line user option menu
+        while(x!=0) {                                                                                                   //while to use the command line user option menu
             switch(x) {
                 case 1:
                     print("Please choose which database table to access [ --> ");
                     table = input.next();
+                    log.info("User has chosen to view the Database");
                     print("Please choose what from the aliens db you wish to see (EX: alien_id)--> ");
                     String selected = input.next();
                     println("\n");
                     ResultSet Aliens = c.Select(table, selected);
                     c.printAliensResultset(Aliens, selected);
                     print("\n\n");
-                    c.printResultSet(c.Select(table, selected));//call the function to see the tables
+                    c.printResultSet(c.Select(table, selected));                                                        //call function to see the tables
                     break;
                 case 2:
                     print("Insert the table that you want to update --> ");
                     table = input.next();
-                    switch(table) {//*add a new case for every new table that you add
+                    switch(table) {                                                                                     //*add a new case for every new table that you add
                         case "aliens":
                             print("Insert the alien_id --> ");
                             int alien_id1 = input.nextInt();
@@ -62,7 +64,7 @@ public class Driver {
                             print("Insert the alien_weakness --> ");
                             String alien_weakness = input.next();
                             Object[] newalien = new Object[] {alien_id1, alien_type, alien_speed, attack_type, alien_weakness};//create the object to add the new alien
-                            c.Insert(table, newalien);//call the function to insert an object to a table
+                            c.Insert(table, newalien);                                                                  //call the function to insert an object to a table
                             break;
                         case "weapon":
                             print("Insert the weapon_id --> ");
@@ -71,8 +73,8 @@ public class Driver {
                             String weapon_name = input.next();
                             print("Insert the alien_id --> ");
                             int alien_id2 = input.nextInt();
-                            Object[] newweapon = new Object[] {weapon_id, weapon_name, alien_id2};//create the object to add the new weapon
-                            c.Insert(table, newweapon);//call the function to insert an object to a table
+                            Object[] newweapon = new Object[] {weapon_id, weapon_name, alien_id2};                      //create the object to add the new weapon
+                            c.Insert(table, newweapon);                                                                 //call the function to insert an object to a table
                             break;
                         default:
                             print("Table doesn't exist!");
@@ -84,7 +86,7 @@ public class Driver {
                     table = input.next();
                     print("Input the where clause you want to use to remove elements with (EX: alien_id=1)--> ");
                     String condition = input.next();
-                    c.Delete(table, condition);//call the function to delete an object from a table
+                    c.Delete(table, condition);                                                                         //call the function to delete an object from a table
                     break;
                 default:
                     println("Not valid number!");
@@ -112,8 +114,7 @@ public class Driver {
     }
 
 
-    //close the connection
-
+    //closes the connection
     public boolean close() {
         try {
             conn.close();

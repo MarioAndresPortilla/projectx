@@ -1,7 +1,9 @@
 package projectx.dao;
-import projectx.model.Backpack;
 import projectx.model.Zombies;
+import projectx.util.ConnectionUtil;
+import java.sql.*;
 
+import projectx.model.Backpack;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,9 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import static projectx.driver.Driver.conn;
 
-
+//Zombies table in our database we'd like to query, we created zombiesDAO interface:
 public class zombiesDAO {
-    public static void select() {
+
+     private static void select() {
         int z_id = 1;
         String sql = "SELECT * FROM zombies WHERE zombie_id = 1";
         try {

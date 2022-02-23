@@ -1,6 +1,7 @@
 package projectx.model;
 
 public class Backpack {
+    // encapsulation: declaring class variables/attributes as private
     private int weapon_id;
     private String weapon_name;
     private int zombie_id;
@@ -10,24 +11,39 @@ public class Backpack {
         this.weapon_name = weapon_name;
         this.zombie_id = zombie_id;
     }
+    // provide public get and set methods to access and update the value of a private variables
+    // get method returns the variable value
+
+
+
     public int getWeaponId() {
         return weapon_id;
     }
+
+
+    // set method sets the value
     public void setWeaponId(int weapon_id) {
         this.weapon_id = weapon_id;
     }
-    public String getWeaponName() {
-        return weapon_name;
-    }
-    public void setWeaponName(String weapon_name) {
-        this.weapon_name = weapon_name;
-    }
-    public int getZombieId() {
-        return zombie_id;
-    }
-    public void setZombieId(int zombie_id) {
-        this.zombie_id = zombie_id;
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public String toString() {
