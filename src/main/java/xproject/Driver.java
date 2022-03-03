@@ -1,16 +1,19 @@
 package xproject;
-import projectx.util.ConnectionUtil;
+import xproject.util.ConnectionUtil;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 import org.apache.log4j.Logger;
+import org.apache.log4j.*;
+
+
 
 public class Driver {
+    public static final Logger log = Logger.getLogger(Driver.class);
     public static Connection conn;
 
     public static void main(String[] args) throws SQLException {
-        final Logger log = Logger.getLogger(Driver.class);
         conn = ConnectionUtil.getConnection();
         log.info("Hello logger!");
         Scanner input = new Scanner(System.in);
@@ -23,7 +26,7 @@ public class Driver {
         System.out.println("..Inside your weapon there are several weapons, one for each known alien or creature you might need to defend yourself against...Are you weapon ready!!?\n");
         input.nextLine();
         System.out.println("We have orders from HQ to document all the undiscovered species and their weapon weakness to our best abilities in the next 24 hours... \n");
-
+        Driver.log.warn("User is about to make a choice from the switch case");
         println("Please choose the best option: ");
         println("0) If you have no new data or information to add to the database");
         println("1) To View the current Alien Data or Weapon Data");
@@ -38,7 +41,7 @@ public class Driver {
                     print("Please choose which database table to access [ --> ");
                     table = input.next();
                     log.info("User has chosen to view the Database");
-                    print("Please choose what from the aliens db you wish to see (EX: alien_id)--> ");
+                    print("Please choose what column you wish to see from the database (EX: alien_id)--> ");
                     String selected = input.next();
                     println("\n");
                     ResultSet Aliens = c.Select(table, selected);
